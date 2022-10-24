@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package custumer;
+
+service CustomService {
+    rpc Create(CustumerForCreate) returns (CustumerInfo);
+    rpc GetByCustumId(GetId) returns (CustumerInfo);
+    rpc Update(CustumerInfo) returns (CustumerInfo);
+    rpc DeletCustum(GetId) returns (Empty);
+    rpc ListAllCustum (Empty) returns (CustumerAll);
+  }
+
+ message Empty {
+
+ }
+
+message GetId {
+    int64 id =1;
+}
+
+message CustumerAllInfo {
+    CustumerInfo custumer=1;
+    
+}
+message CustumerForCreate {
+    string first_name=1;
+    string last_name=2;
+    string email =3;
+    string phoneNumber=4;
+    string bio =5;
+    repeated Addresss addresses=7;
+}
+message Addresss {
+    string street=1;
+    string home_adress=2;
+}
+
+message CustumerInfo{
+    int64 id =1;
+    string first_name =2;
+    string last_name=3;
+    string email = 4;
+    string phoneNumber=5;
+    string Bio =6;
+    repeated CustumAddress addresses = 7;
+}
+
+message CustumAddress {
+    int64 id =1;
+    string street=2;
+    string home_adress=3;
+}
+message CustumerAll{
+    repeated CustumerInfo allCustum=1;
+}
