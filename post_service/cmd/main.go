@@ -3,11 +3,11 @@ package main
 import (
 	"net"
 
-	"examLast/post_serves/config"
-	pb "examLast/post_serves/genproto/post"
-	"examLast/post_serves/pkg/db"
-	"examLast/post_serves/pkg/logger"
-	"examLast/post_serves/service"
+	"examLast/post_service/config"
+	pb "examLast/post_service/genproto/post"
+	"examLast/post_service/pkg/db"
+	"examLast/post_service/pkg/logger"
+	"examLast/post_service/service"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"

@@ -1,7 +1,7 @@
 package postgres
 
 import (
-	pb "examLast/post_serves/genproto/post"
+	pb "examLast/post_service/genproto/post"
 	"fmt"
 
 	"github.com/jmoiron/sqlx"

@@ -1,7 +1,7 @@
 package repo
 
 import (
-	pb "examLast/post_serves/genproto/post"
+	pb "examLast/post_service/genproto/post"
 )
 
 type PostInfoI interface{

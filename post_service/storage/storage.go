@@ -1,8 +1,8 @@
 package storage
 
 import (
-	"examLast/post_serves/storage/postgres"
-	"examLast/post_serves/storage/repo"
+	"examLast/post_service/storage/postgres"
+	"examLast/post_service/storage/repo"
 
 	"github.com/jmoiron/sqlx"
 )
