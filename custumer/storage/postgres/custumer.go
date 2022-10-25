@@ -50,11 +50,11 @@ func (r *custumRepo) Update(req *pb.CustumerInfo) (*pb.CustumerInfo, error) {
 		err = r.db.QueryRow(`UPDATE custumer_address
 	SET 
 	street=$1,
-    home_address=$2 WHERE custumer_id = $3 returning street, home_address`, address.Street, address.HomeAdress, req.Id).Scan(
-			&adress.Street,
-			&adress.HomeAdress)
+    home_address=$2 WHERE custumer_id = $3 returning street, home_address`, adress.Street, adress.HomeAdress, req.Id).Scan(
+			&address.Street,
+			&address.HomeAdress)
 
-		adder = append(adder, adress)
+		adder = append(adder, &address)
 		fmt.Println(adder)
 	}
 	if err != nil {
