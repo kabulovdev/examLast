@@ -61,6 +61,16 @@ func (s *PostService) Delet(cxt context.Context, req *pb.Id) (*pb.EmptyPost, err
 	}
 	return Post, nil
 }
+func (s *PostService) GetPosterInfo(cxt context.Context, req *pb.Id) (*pb.PostInfo, error) {
+	fmt.Println(req)
+	Post, err := s.storage.Post().GetPosterInfo(&pb.Id{Id: req.Id})
+	if err != nil {
+		s.logger.Error("error while deleting post", l.Any("error deleting post", err))
+		return &pb.PostInfo{}, status.Error(codes.Internal, "something went wrong")
+	}
+	return Post, nil
+}
+
 func (s *PostService) GetByOwnerID(cxt context.Context, req *pb.Id) (*pb.Posts, error) {
 	fmt.Println(req)
 	Post, err := s.storage.Post().GetByOwnerId(req)

@@ -455,6 +455,41 @@ func (h *handlerV1) UpdateReating(c *gin.Context) {
 
 }
 
+// GetOnlyPost get Post
+// @Summary      Get  post api
+// @Description this api get post by id
+// @Tags Post
+// @Accept json
+// @Produce json
+// @Param   id   path  int  true  "Post ID"
+// @Success 200 {object} post.PostInfo
+// @Router /v1/post/get/{id}  [get]
+func (h *handlerV1) GetPost(c *gin.Context) {
+	var jspbMarshal protojson.MarshalOptions
+	jspbMarshal.UseProtoNames = true
+	guid := c.Param("id")
+	id, err := strconv.ParseInt(guid, 10, 64)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed parse string to int", l.Error(err))
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
+	defer cancel()
+	result, err := h.serviceManager.PostService().GetPost(ctx,&pb.Id{Id: id} )
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to create user", l.Error(err))
+		return
+	}
+	c.JSON(http.StatusOK, result)
+}
+
+
 // CreateStore create store
 // @Summary      update custumer api
 // @Description this api update custumer

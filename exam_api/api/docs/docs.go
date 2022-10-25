@@ -298,6 +298,38 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/post/get/{id}": {
+            "get": {
+                "description": "this api get post by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Get  post api",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Post ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/post.PostInfo"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/post/update": {
             "post": {
                 "description": "this api update Post",

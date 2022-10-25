@@ -1,8 +1,8 @@
 package postgres
 
 import (
-	"fmt"
 	pb "examLast/post_serves/genproto/post"
+	"fmt"
 
 	"github.com/jmoiron/sqlx"
 )
@@ -102,14 +102,14 @@ func (p *postRepo) GetByOwnerId(req *pb.Id) (*pb.Posts, error) {
 	return &result, nil
 }
 
-func (r *postRepo) GetPost(req *pb.Id) (*pb.PostInfo, error) {
+func (r *postRepo) GetPosterInfo(req *pb.Id) (*pb.PostInfo, error) {
 	result := pb.PostInfo{}
 
 	err := r.db.QueryRow(`select 
 	id,
 	poster_id,
 	description_post
-	from posts where poster_id = $1 and deleted_at is null`, req.Id).Scan(
+	from posts where id = $1 and deleted_at is null`, req.Id).Scan(
 		&result.Id,
 		&result.PosterId,
 		&result.DescriptionPost,
@@ -124,6 +124,48 @@ func (r *postRepo) GetPost(req *pb.Id) (*pb.PostInfo, error) {
     type
 	from medias where post_id=$1
 	`, result.Id)
+	if err != nil {
+		return &pb.PostInfo{}, err
+	}
+	medias := []*pb.Media{}
+	for rows.Next() {
+		med := pb.Media{}
+		err = rows.Scan(
+			&med.Name,
+			&med.Link,
+			&med.Type)
+		if err != nil {
+			return &pb.PostInfo{}, err
+		}
+		medias = append(medias, &med)
+	}
+	result.Medias = medias
+	return &result, nil
+}
+
+func (r *postRepo) GetPost(req *pb.Id) (*pb.PostInfo, error) {
+	result := pb.PostInfo{}
+
+	err := r.db.QueryRow(`select 
+	id,
+	poster_id,
+	description_post
+	from posts where id = $1 and deleted_at is null`, req.Id).Scan(
+		&result.Id,
+		&result.PosterId,
+		&result.DescriptionPost,
+	)
+	fmt.Println(result)
+	if err != nil {
+		return &pb.PostInfo{}, err
+	}
+	rows, err := r.db.Query(`
+	select  
+    name,
+    link,
+    type
+	from medias where post_id=$1
+	`, result.PosterId)
 	if err != nil {
 		return &pb.PostInfo{}, err
 	}
