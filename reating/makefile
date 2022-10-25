@@ -9,14 +9,3 @@ proto-gen:
 server:
 	go run cmd/main.go
 	
-# create:
-#   migrate create -ext sql -dir migrations -seq create_customer_table
-
-# up-version:
-#   migrate -source file:./migrations/ -database 'postgres://postgres:compos1995@localhost:5432/postgres?sslmode=disable' up
-
-# down-version:
-#   migrate -source file:./migrations/ -database 'postgres://postgres:compos1995@localhost:5432/postgres?sslmode=disable' down
-
-# run:
-# 	go run cmd/main.go
