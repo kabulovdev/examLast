@@ -1,4 +1,4 @@
-module examLast/reating
+module examLast/reating_service
 
 go 1.19
 

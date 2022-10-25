@@ -1,4 +1,4 @@
-module examLast/post_serves
+module examLast/post_service
 
 go 1.19
 
