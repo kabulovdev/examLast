@@ -1,5 +1,11 @@
 CURRENT_DIR=$(shell pwd)
 
+pull_submodule:
+	git submodule update --init --recursive
+
+update_submodule:
+	git submodule update --remote --merge
+
 build:
 	CGO_ENABLED=0 GOOS=linux go build -mod=vendor -a -installsuffix cgo -o ${CURRENT_DIR}/bin/${APP} ${APP_CMD_DIR}/main.go
 
