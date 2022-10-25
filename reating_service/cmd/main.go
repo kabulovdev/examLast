@@ -3,11 +3,11 @@ package main
 import (
 	"net"
 
-	"examLast/reating/config"
-	pb "examLast/reating/genproto/reating"
-	"examLast/reating/pkg/db"
-	"examLast/reating/pkg/logger"
-	"examLast/reating/service"
+	"examLast/reating_service/config"
+	pb "examLast/reating_service/genproto/reating"
+	"examLast/reating_service/pkg/db"
+	"examLast/reating_service/pkg/logger"
+	"examLast/reating_service/service"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"

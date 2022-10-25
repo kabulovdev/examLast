@@ -3,11 +3,11 @@ package main
 import (
 	"net"
 
-	"examLast/custumer/config"
-	pb "examLast/custumer/genproto/custum"
-	"examLast/custumer/pkg/db"
-	"examLast/custumer/pkg/logger"
-	"examLast/custumer/service"
+	"examLast/custumer_service/config"
+	pb "examLast/custumer_service/genproto/custum"
+	"examLast/custumer_service/pkg/db"
+	"examLast/custumer_service/pkg/logger"
+	"examLast/custumer_service/service"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"

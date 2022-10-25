@@ -1,7 +1,7 @@
 package repo
 
 import (
-	pb "examLast/reating/genproto/reating"
+	pb "examLast/reating_service/genproto/reating"
 )
 
 type ReatingInfoI interface {

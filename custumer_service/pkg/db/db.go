@@ -3,7 +3,7 @@ package db
 import (
 	"fmt"
 
-	"examLast/custumer/config"
+	"examLast/custumer_service/config"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"

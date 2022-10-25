@@ -1,7 +1,7 @@
 package postgres
 
 import (
-	pb "examLast/custumer/genproto/custum"
+	pb "examLast/custumer_service/genproto/custum"
 	"fmt"
 
 	"github.com/jmoiron/sqlx"

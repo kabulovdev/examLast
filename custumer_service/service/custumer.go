@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	pb "examLast/custumer/genproto/custum"
-	l "examLast/custumer/pkg/logger"
+	pb "examLast/custumer_service/genproto/custum"
+	l "examLast/custumer_service/pkg/logger"
 	//grpcclient "custumer/service/grpc_client"
-	"examLast/custumer/storage"
+	"examLast/custumer_service/storage"
 
 	"github.com/jmoiron/sqlx"
 	"google.golang.org/grpc/codes"

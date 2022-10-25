@@ -1,7 +1,7 @@
 package repo
 
 import (
-	pb "examLast/custumer/genproto/custum"
+	pb "examLast/custumer_service/genproto/custum"
 )
 
 type CustumerInfoI interface {

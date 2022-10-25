@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	pb "examLast/reating/genproto/reating"
-	l "examLast/reating/pkg/logger"
-	"examLast/reating/storage"
+	pb "examLast/reating_service/genproto/reating"
+	l "examLast/reating_service/pkg/logger"
+	"examLast/reating_service/storage"
 
 	"github.com/jmoiron/sqlx"
 	"google.golang.org/grpc/codes"
