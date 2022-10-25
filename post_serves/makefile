@@ -8,14 +8,3 @@ proto-gen:
 	ls genproto/*.pb.go | xargs -n1 -IX bash -c "sed -e '/bool/ s/,omitempty//' X > X.tmp && mv X{.tmp,}"
 server:
 	go run cmd/main.go
-# create:
-#   migrate create -ext sql -dir migrations -seq create_customer_table
-
-# up-version:
-#   migrate -source file:./migrations/ -database 'postgres://postgres:compos1995@localhost:5432/postgres?sslmode=disable' up
-
-# down-version:
-#   migrate -source file:./migrations/ -database 'postgres://postgres:compos1995@localhost:5432/postgres?sslmode=disable' down
-
-# run:
-# 	go run cmd/main.go
