@@ -13,4 +13,4 @@ create table medias (
     name text,
     link text,
     type text
-)
+);

@@ -7,4 +7,4 @@ create table reating (
     created_at TIMESTAMP(0) WITH TIME zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP(0) WITH TIME zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     deleted_at TIMESTAMP(0) WITH TIME zone NULL
-)
+);
