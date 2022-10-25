@@ -114,6 +114,29 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/custumer/getList": {
+            "get": {
+                "description": "this api get custumers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Custumer"
+                ],
+                "summary": "Get only custumers api",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/custumer.CustumerAll"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/custumer/update": {
             "post": {
                 "description": "this api update custumer",
@@ -465,6 +488,17 @@ const docTemplate = `{
                 },
                 "street": {
                     "type": "string"
+                }
+            }
+        },
+        "custumer.CustumerAll": {
+            "type": "object",
+            "properties": {
+                "allCustum": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/custumer.CustumerInfo"
+                    }
                 }
             }
         },

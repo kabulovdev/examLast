@@ -59,6 +59,28 @@ func (h *handlerV1) GetPostReating(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
+// GetCustumers get Custumers
+// @Summary      Get only custumers api
+// @Description this api get custumers
+// @Tags Custumer
+// @Accept json
+// @Produce json
+// @Success 200 {object} custumer.CustumerAll
+// @Router /v1/custumer/getList [get]
+func (h *handlerV1) GetListCustumers(c *gin.Context) {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
+	defer cancel()
+	result, err := h.serviceManager.CustumerService().ListAllCustum(ctx, &pbs.Empty{})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to create user", l.Error(err))
+		return
+	}
+	c.JSON(http.StatusOK, result)
+}
+
 // CreatePost create post
 // @Summary      create post api
 // @Description this api create post
@@ -554,7 +576,7 @@ func (h *handlerV1) GetPostAllInfo(c *gin.Context) {
 	for _, poster := range response.Posts {
 		azaz = poster.PosterId
 	}
-	
+
 	fmt.Println(azaz)
 	response2, err := h.serviceManager.CustumerService().GetByCustumId(ctx, &pbs.GetId{Id: azaz})
 	if err != nil {

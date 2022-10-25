@@ -8,13 +8,6 @@ proto-gen:
 	ls genproto/*.pb.go | xargs -n1 -IX bash -c "sed -e '/bool/ s/,omitempty//' X > X.tmp && mv X{.tmp,}"
 server:
 	go run cmd/main.go
-
-pull_submodule:
-	git submodule update --init --recursive
-
-update_submodule:
-	git submodule update --remote --merge
-
 # create:
 #   migrate create -ext sql -dir migrations -seq create_customer_table
 
@@ -26,6 +19,3 @@ update_submodule:
 
 # run:
 # 	go run cmd/main.go
-
-# create_proto_submodule:
-# 	git submodule add git@github.com:Asliddin3/protos.git

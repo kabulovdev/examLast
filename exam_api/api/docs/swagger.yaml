@@ -15,6 +15,13 @@ definitions:
       street:
         type: string
     type: object
+  custumer.CustumerAll:
+    properties:
+      allCustum:
+        items:
+          $ref: '#/definitions/custumer.CustumerInfo'
+        type: array
+    type: object
   custumer.CustumerForCreate:
     properties:
       addresses:
@@ -186,6 +193,21 @@ paths:
           schema:
             $ref: '#/definitions/custumer.CustumerInfo'
       summary: get Custumer api
+      tags:
+      - Custumer
+  /v1/custumer/getList:
+    get:
+      consumes:
+      - application/json
+      description: this api get custumers
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/custumer.CustumerAll'
+      summary: Get only custumers api
       tags:
       - Custumer
   /v1/custumer/update:

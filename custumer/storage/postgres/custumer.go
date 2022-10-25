@@ -64,8 +64,58 @@ func (r *custumRepo) Update(req *pb.CustumerInfo) (*pb.CustumerInfo, error) {
 	return &custumResp, nil
 }
 func (r *custumRepo) ListAllCustum(req *pb.Empty) (*pb.CustumerAll, error) {
-
-	return &pb.CustumerAll{}, nil
+	result12 := pb.CustumerAll{}
+	rows, err := r.db.Query(`
+	select 
+	id,
+	first_name,
+	last_name,
+	email,
+	phonenumber
+	from custumer_base where deleted_at is NULL`)
+	if err != nil {
+		return &pb.CustumerAll{}, err
+	}
+	resul := []*pb.CustumerInfo{}
+	for rows.Next() {
+		temp := &pb.CustumerInfo{}
+		err = rows.Scan(
+			&temp.Id,
+			&temp.FirstName,
+			&temp.LastName,
+			&temp.Email,
+			&temp.PhoneNumber)
+		if err != nil {
+			return &pb.CustumerAll{}, err
+		}
+		rowlar, err := r.db.Query(`
+		select 
+		id, 
+		street,
+		home_address
+		from custumer_address where custumer_id=$1
+		`, temp.Id)
+		if err != nil {
+			return &pb.CustumerAll{}, err
+		}
+		address := []*pb.CustumAddress{}
+		for rowlar.Next() {
+			med := pb.CustumAddress{}
+			err = rowlar.Scan(
+				&med.Id,
+				&med.Street,
+				&med.HomeAdress)
+			if err != nil {
+				return &pb.CustumerAll{}, err
+			}
+			address = append(address, &med)
+		}
+		fmt.Println(temp)
+		temp.Addresses = address
+		resul = append(resul, temp)
+	}
+	result12.AllCustum = resul
+	return &result12, nil
 }
 func (r *custumRepo) GetByCustumId(req *pb.GetId) (*pb.CustumerInfo, error) {
 	result := pb.CustumerInfo{}

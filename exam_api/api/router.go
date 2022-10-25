@@ -45,8 +45,9 @@ func New(option Option) *gin.Engine {
 	api.DELETE("/reating/delete/:id",handlerV1.DeleteReating)
 	api.DELETE("/post/delet/:id",handlerV1.DeletePost)
 	api.GET("/post/allInfo/:id",handlerV1.GetPostAllInfo)
-	api.GET("reating/get/:id",handlerV1.GetReating)
-	api.GET("post/get/reatings/:id",handlerV1.GetPostReating)
+	api.GET("/reating/get/:id",handlerV1.GetReating)
+	api.GET("/post/get/reatings/:id",handlerV1.GetPostReating)
+	api.GET("/custumer/getList",handlerV1.GetListCustumers)
 	url := ginSwagger.URL("swagger/doc.json")
 	api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFile.Handler, url))
 	return router
