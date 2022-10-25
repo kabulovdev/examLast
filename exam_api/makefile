@@ -6,3 +6,5 @@ run_script:
 
 swag:
 	swag init -g ./api/router.go -o api/docs
+
+	

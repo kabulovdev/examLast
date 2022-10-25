@@ -9,11 +9,11 @@ proto-gen:
 server:
 	go run cmd/main.go
 	
-create migrate:
-	migrate create -ext sql -dir migrations -seq create_xxx_table
+migrate_up:
+	migrate -path migrations/ -database postgres://postgres:sdy12197@localhost:5432/reatingdb up
 
-migrate up:
-	migrate -source file://migrations/ -database postgres://postgres:sdy12197@localhost:5432/reatingdb up
+migrate_down:
+	migrate -path migrations/ -database postgres://postgres:sdy12197@localhost:5432/reatingdb down
 
-migrate down:
-	migrate -source file://migrations/ -database postgres://postgres:sdy12197@localhost:5432/reatingdb down
+migrate_force:
+	migrate -path migrations/ -database postgres://postgres:sdy12197@localhost:5432/reatingdb force 2
