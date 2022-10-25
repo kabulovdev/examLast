@@ -421,7 +421,7 @@ func (h *handlerV1) GetCustumer(c *gin.Context) {
 // @Produce json
 // @Param request body reating.ReatingInfo true "reating"
 // @Success 200 {object} reating.ReatingInfo
-// @Router /v1/reating/update [post]
+// @Router /v1/reating/update [put]
 func (h *handlerV1) UpdateReating(c *gin.Context) {
 	var (
 		body        pr.ReatingInfo
@@ -498,7 +498,7 @@ func (h *handlerV1) GetPost(c *gin.Context) {
 // @Produce json
 // @Param request body custumer.CustumerInfo true "Custumer"
 // @Success 200 {object} custumer.CustumerInfo
-// @Router /v1/custumer/update [post]
+// @Router /v1/custumer/update [put]
 func (h *handlerV1) UpdateCustumer(c *gin.Context) {
 	var (
 		body        pbs.CustumerInfo
@@ -540,7 +540,7 @@ func (h *handlerV1) UpdateCustumer(c *gin.Context) {
 // @Produce json
 // @Param request body post.PostInfo true "Post"
 // @Success 200 {object} post.PostInfo
-// @Router /v1/post/update [post]
+// @Router /v1/post/update [put]
 func (h *handlerV1) UpdatePost(c *gin.Context) {
 	var (
 		body        pb.PostInfo

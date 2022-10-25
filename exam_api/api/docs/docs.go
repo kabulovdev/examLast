@@ -138,7 +138,7 @@ const docTemplate = `{
             }
         },
         "/v1/custumer/update": {
-            "post": {
+            "put": {
                 "description": "this api update custumer",
                 "consumes": [
                     "application/json"
@@ -331,7 +331,7 @@ const docTemplate = `{
             }
         },
         "/v1/post/update": {
-            "post": {
+            "put": {
                 "description": "this api update Post",
                 "consumes": [
                     "application/json"
@@ -463,7 +463,7 @@ const docTemplate = `{
             }
         },
         "/v1/reating/update": {
-            "post": {
+            "put": {
                 "description": "this api update reating",
                 "consumes": [
                     "application/json"

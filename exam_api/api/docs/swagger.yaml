@@ -211,7 +211,7 @@ paths:
       tags:
       - Custumer
   /v1/custumer/update:
-    post:
+    put:
       consumes:
       - application/json
       description: this api update custumer
@@ -337,7 +337,7 @@ paths:
       tags:
       - Post
   /v1/post/update:
-    post:
+    put:
       consumes:
       - application/json
       description: this api update Post
@@ -423,7 +423,7 @@ paths:
       tags:
       - Reating
   /v1/reating/update:
-    post:
+    put:
       consumes:
       - application/json
       description: this api update reating
