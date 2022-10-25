@@ -1,0 +1,12 @@
+[submodule "custumer_service/protos"]
+	path = custumer_service/protos
+	url = git@github.com:kabulovdev/protos.git
+[submodule "post_service/protos"]
+	path = post_service/protos
+	url = git@github.com:kabulovdev/protos.git
+[submodule "reating_service/protos"]
+	path = reating_service/protos
+	url = git@github.com:kabulovdev/protos.git
+[submodule "exam_api/protos"]
+	path = exam_api/protos
+	url = git@github.com:kabulovdev/protos.git
