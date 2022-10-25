@@ -24,6 +24,46 @@ type AllthingPost struct {
 	Postinfo   pb.Posts
 	Posterinfo pbs.CustumerInfo
 }
+// GetReatingAavarage get Reating
+// @Summary      Get  posts reating api
+// @Description this api get posts reating by id
+// @Tags Post
+// @Accept json
+// @Produce json
+// @Param   id   path  int  true  "Post ID"
+// @Success 200 {object} reating.Reatings
+// @Router /v1/post/get/reatings/avarage/{id}  [get]
+func (h *handlerV1) GetPostReatingNew(c *gin.Context) {
+	var jspbMarshal protojson.MarshalOptions
+	jspbMarshal.UseProtoNames = true
+	guid := c.Param("id")
+	id, err := strconv.ParseInt(guid, 10, 64)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed parse string to int", l.Error(err))
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
+	defer cancel()
+	result, err := h.serviceManager.ReatingService().GetPostReating(ctx, &pr.Id{Id: id})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to create user", l.Error(err))
+		return
+	}
+	var reatinglar int64
+	var count int64
+	for _, reatings := range result.Reatins{
+		reatinglar=reatinglar+reatings.Reating
+		count++
+	}
+
+	c.JSON(http.StatusOK, reatinglar/count)
+}
 
 // GetReating get Reating
 // @Summary      Get  posts reating api

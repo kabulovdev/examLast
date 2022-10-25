@@ -254,6 +254,38 @@
                 }
             }
         },
+        "/v1/post/get/reatings/avarage/{id}": {
+            "get": {
+                "description": "this api get posts reating by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Get  posts reating api",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Post ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/reating.Reatings"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/post/get/reatings/{id}": {
             "get": {
                 "description": "this api get posts reating by id",

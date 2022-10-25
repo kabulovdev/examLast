@@ -49,6 +49,7 @@ func New(option Option) *gin.Engine {
 	api.GET("/post/get/reatings/:id",handlerV1.GetPostReating)
 	api.GET("/custumer/getList",handlerV1.GetListCustumers)
 	api.GET("/post/get/:id",handlerV1.GetPost)
+	api.GET("/post/get/reatings/avarage/:id",handlerV1.GetPostReatingNew)
 	url := ginSwagger.URL("swagger/doc.json")
 	api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFile.Handler, url))
 	return router
