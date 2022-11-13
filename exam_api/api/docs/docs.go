@@ -16,8 +16,86 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/token": {
+            "get": {
+                "description": "This API generates new access token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Token"
+                ],
+                "summary": "Get Accsess token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Refresh Token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "object"
+                    }
+                }
+            }
+        },
+        "/v1/admin/login/{name}/{password}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Login admin",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Login admin",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "admin name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "admin password",
+                        "name": "password",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/custumer.GetAdminRes"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/custumer/create": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "this api create store",
                 "consumes": [
                     "application/json"
@@ -52,6 +130,11 @@ const docTemplate = `{
         },
         "/v1/custumer/delete/{id}": {
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "this api delet custumer with posts by id",
                 "consumes": [
                     "application/json"
@@ -84,6 +167,11 @@ const docTemplate = `{
         },
         "/v1/custumer/get/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "this api get custumer with posts by id",
                 "consumes": [
                     "application/json"
@@ -116,6 +204,11 @@ const docTemplate = `{
         },
         "/v1/custumer/getList": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "this api get custumers",
                 "consumes": [
                     "application/json"
@@ -139,6 +232,11 @@ const docTemplate = `{
         },
         "/v1/custumer/update": {
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "this api update custumer",
                 "consumes": [
                     "application/json"
@@ -171,8 +269,57 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/moder/login/{name}/{password}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Login moder",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Login moder",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Moderator name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Moderator password",
+                        "name": "password",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/custumer.GetAdminRes"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/post/allInfo/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "this api get Post by id",
                 "consumes": [
                     "application/json"
@@ -202,6 +349,11 @@ const docTemplate = `{
         },
         "/v1/post/create": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "this api create post",
                 "consumes": [
                     "application/json"
@@ -236,6 +388,11 @@ const docTemplate = `{
         },
         "/v1/post/delet/{id}": {
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "this api posts by id",
                 "consumes": [
                     "application/json"
@@ -268,6 +425,11 @@ const docTemplate = `{
         },
         "/v1/post/get/reatings/avarage/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "this api get posts reating by id",
                 "consumes": [
                     "application/json"
@@ -300,6 +462,11 @@ const docTemplate = `{
         },
         "/v1/post/get/reatings/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "this api get posts reating by id",
                 "consumes": [
                     "application/json"
@@ -332,6 +499,11 @@ const docTemplate = `{
         },
         "/v1/post/get/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "this api get post by id",
                 "consumes": [
                     "application/json"
@@ -364,6 +536,11 @@ const docTemplate = `{
         },
         "/v1/post/update": {
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "this api update Post",
                 "consumes": [
                     "application/json"
@@ -398,6 +575,11 @@ const docTemplate = `{
         },
         "/v1/reating/create": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "this api create reating",
                 "consumes": [
                     "application/json"
@@ -432,6 +614,11 @@ const docTemplate = `{
         },
         "/v1/reating/delete/{id}": {
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "this api delet reating by id",
                 "consumes": [
                     "application/json"
@@ -464,6 +651,11 @@ const docTemplate = `{
         },
         "/v1/reating/get/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "this api get reating by id",
                 "consumes": [
                     "application/json"
@@ -496,6 +688,11 @@ const docTemplate = `{
         },
         "/v1/reating/update": {
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "this api update reating",
                 "consumes": [
                     "application/json"
@@ -523,6 +720,89 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/reating.ReatingInfo"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/register": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Registers Custumer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Custumer"
+                ],
+                "summary": "Register Custumer",
+                "parameters": [
+                    {
+                        "description": "Custumer",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/custumer.CustumerForCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/custumer.CustumerInfo"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/verify/{email}/{code}": {
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Verifys custumer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Custumer"
+                ],
+                "summary": "Verify custumer",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "code",
+                        "name": "code",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "email",
+                        "name": "email",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/custumer.CustumerInfo"
                         }
                     }
                 }
@@ -578,16 +858,28 @@ const docTemplate = `{
                 "bio": {
                     "type": "string"
                 },
+                "code": {
+                    "type": "string"
+                },
                 "email": {
                     "type": "string"
                 },
                 "first_name": {
                     "type": "string"
                 },
+                "id": {
+                    "type": "integer"
+                },
                 "last_name": {
                     "type": "string"
                 },
+                "password": {
+                    "type": "string"
+                },
                 "phoneNumber": {
+                    "type": "string"
+                },
+                "refresh_token": {
                     "type": "string"
                 }
             }
@@ -604,6 +896,9 @@ const docTemplate = `{
                         "$ref": "#/definitions/custumer.CustumAddress"
                     }
                 },
+                "code": {
+                    "type": "string"
+                },
                 "email": {
                     "type": "string"
                 },
@@ -616,13 +911,42 @@ const docTemplate = `{
                 "last_name": {
                     "type": "string"
                 },
+                "password": {
+                    "type": "string"
+                },
                 "phoneNumber": {
+                    "type": "string"
+                },
+                "refresh_token": {
                     "type": "string"
                 }
             }
         },
         "custumer.Empty": {
             "type": "object"
+        },
+        "custumer.GetAdminRes": {
+            "type": "object",
+            "properties": {
+                "AccesToken": {
+                    "type": "string"
+                },
+                "Name": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
         },
         "post.EmptyPost": {
             "type": "object"
@@ -729,6 +1053,13 @@ const docTemplate = `{
                 }
             }
         }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
     }
 }`
 
@@ -739,7 +1070,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "",
-	Description:      "",
+	Description:      "ishlaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

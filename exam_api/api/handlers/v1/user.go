@@ -5,10 +5,13 @@ import (
 	"examLast/exam_api/api/handlers/models"
 	"fmt"
 	"net/http"
-
+	"strings"
+	email "examLast/exam_api/email"
+	"encoding/json"
 	"strconv"
+	"github.com/spf13/cast"
 	"time"
-
+ 	etc "examLast/exam_api/pkg/etc"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/protobuf/encoding/protojson"
 
@@ -28,6 +31,7 @@ type AllthingPost struct {
 // @Summary      Get  posts reating api
 // @Description this api get posts reating by id
 // @Tags Post
+// @Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param   id   path  int  true  "Post ID"
@@ -69,6 +73,7 @@ func (h *handlerV1) GetPostReatingNew(c *gin.Context) {
 // @Summary      Get  posts reating api
 // @Description this api get posts reating by id
 // @Tags Post
+// @Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param   id   path  int  true  "Post ID"
@@ -103,6 +108,7 @@ func (h *handlerV1) GetPostReating(c *gin.Context) {
 // @Summary      Get only custumers api
 // @Description this api get custumers
 // @Tags Custumer
+// @Security BearerAuth
 // @Accept json
 // @Produce json
 // @Success 200 {object} custumer.CustumerAll
@@ -125,6 +131,7 @@ func (h *handlerV1) GetListCustumers(c *gin.Context) {
 // @Summary      create post api
 // @Description this api create post
 // @Tags Post
+// @Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param request body post.PostForCreate true "Custumer"
@@ -166,6 +173,7 @@ func (h *handlerV1) CreatePost(c *gin.Context) {
 // @Summary      delete Post api
 // @Description this api posts by id
 // @Tags Post
+// @Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param   id   path  int  true  "Post id"
@@ -201,6 +209,7 @@ func (h *handlerV1) DeletePost(c *gin.Context) {
 // @Summary      create store api
 // @Description this api create store
 // @Tags Custumer
+// @Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param request body custumer.CustumerForCreate true "Custumer"
@@ -243,6 +252,7 @@ func (h *handlerV1) CreateCustumer(c *gin.Context) {
 // @Summary      create reating api
 // @Description this api create reating
 // @Tags Reating
+// @Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param request body reating.ReatingForCreate true "Custumer"
@@ -288,6 +298,7 @@ func (h *handlerV1) CreateReating(c *gin.Context) {
 // @Summary      Get reating api
 // @Description this api get reating by id
 // @Tags Reating
+// @Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param   id   path  int  true  "reating id"
@@ -322,6 +333,7 @@ func (h *handlerV1) GetReating(c *gin.Context) {
 // @Summary      delete Reating api
 // @Description this api delet reating by id
 // @Tags Reating
+// @Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param   id   path  int  true  "reating id"
@@ -357,6 +369,7 @@ func (h *handlerV1) DeleteReating(c *gin.Context) {
 // @Summary      delete Custumer api
 // @Description this api delet custumer with posts by id
 // @Tags Custumer
+// @Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param   id   path  int  true  "Custumer id"
@@ -393,6 +406,7 @@ func (h *handlerV1) DeleteCustumer(c *gin.Context) {
 // @Summary      get Custumer api
 // @Description this api get custumer with posts by id
 // @Tags Custumer
+// @Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param   id   path  int  true  "Custumer id"
@@ -457,6 +471,7 @@ func (h *handlerV1) GetCustumer(c *gin.Context) {
 // @Summary      update reating api
 // @Description this api update reating
 // @Tags Reating
+//@Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param request body reating.ReatingInfo true "reating"
@@ -499,6 +514,7 @@ func (h *handlerV1) UpdateReating(c *gin.Context) {
 // @Summary      Get  post api
 // @Description this api get post by id
 // @Tags Post
+//@Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param   id   path  int  true  "Post ID"
@@ -534,6 +550,7 @@ func (h *handlerV1) GetPost(c *gin.Context) {
 // @Summary      update custumer api
 // @Description this api update custumer
 // @Tags Custumer
+//@Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param request body custumer.CustumerInfo true "Custumer"
@@ -576,6 +593,7 @@ func (h *handlerV1) UpdateCustumer(c *gin.Context) {
 // @Summary      update post api
 // @Description this api update Post
 // @Tags Post
+//@Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param request body post.PostInfo true "Post"
@@ -618,6 +636,7 @@ func (h *handlerV1) UpdatePost(c *gin.Context) {
 // @Summary      get Post api
 // @Description this api get Post by id
 // @Tags Post
+// @Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param   id   path  int  true  "Poster id"
@@ -665,4 +684,321 @@ func (h *handlerV1) GetPostAllInfo(c *gin.Context) {
 	natija.Posterinfo = *response2
 	natija.Postinfo = *response
 	c.JSON(http.StatusOK, natija)
+}
+// Verify user
+// @Summary      Verify custumer
+// @Description  Verifys custumer
+// @Tags         Custumer
+// @Security BearerAuth
+// @Accept       json
+// @Produce      json
+// @Param        code   path string true "code"
+// @Param        email  path string true "email"
+// @Success      200  {object}  custumer.CustumerInfo
+// @Router       /v1/verify/{email}/{code} [patch]
+func (h *handlerV1) Verify(c *gin.Context) {
+	var jspbMarshal protojson.MarshalOptions
+	jspbMarshal.UseProtoNames = true
+
+	var (
+		code  = c.Param("code")
+		email = c.Param("email")
+	)
+	fmt.Println(email, code)
+	userBody, err := h.redis.Get(email)
+	if err != nil {
+		c.JSON(http.StatusGatewayTimeout, gin.H{
+			"info":  "Your time has expired",
+			"error": err.Error(),
+		})
+		h.log.Error("Error while getting user from redis", l.Any("redis", err))
+	}
+	fmt.Println(userBody)
+	userBodys := cast.ToString(userBody)
+	body := pbs.CustumerForCreate{}
+	fmt.Println(userBodys)
+	err = json.Unmarshal([]byte(userBodys), &body)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("Error while unmarshaling from json to user body", l.Any("json", err))
+		return
+	}
+	if body.Code != code {
+		c.JSON(http.StatusConflict, gin.H{
+			"info": "Wrong code",
+		})
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
+	defer cancel()
+
+	id := strconv.FormatInt(int64(body.Id), 10)
+
+	// Genrating refresh and jwt tokens
+	h.jwthandler.Iss = "user"
+	h.jwthandler.Sub = id
+	h.jwthandler.Role = "authorized"
+	h.jwthandler.Aud = []string{"exam-app"}
+	h.jwthandler.SigninKey = h.cfg.SignKey
+	h.jwthandler.Log = h.log
+	tokens, err := h.jwthandler.GenerateAuthJWT()
+	accessToken := tokens[0]
+	refreshToken := tokens[1]
+
+	if err != nil {
+		h.log.Error("error occured while generating tokens")
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "something went wrong,please try again",
+		})
+		return
+	}
+	body.RefreshToken = refreshToken
+	res, err := h.serviceManager.CustumerService().Create(ctx, &body)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("Error while creating user", l.Any("post", err))
+		return
+	}
+
+	fmt.Println(refreshToken,"\n","\n")
+	fmt.Println(accessToken)
+
+	c.JSON(http.StatusOK, res)
+}
+
+
+// Register Custumer
+// @Summary      Register Custumer
+// @Description  Registers Custumer
+// @Tags         Custumer
+// @Security BearerAuth
+// @Accept       json
+// @Produce      json
+// @Param        user   body   custumer.CustumerForCreate   true  "Custumer"
+// @Success      200  {object}  custumer.CustumerInfo
+// @Router       /v1/register [post]
+func (h *handlerV1) RegisterUser(c *gin.Context) {
+	var body pbs.CustumerForCreate
+
+	err := c.ShouldBindJSON(&body)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"Error": err.Error(),
+			"Hint":  "Check your data",
+		})
+		h.log.Error("Error while binding json", l.Any("json", err))
+		return
+	}
+	body.Email = strings.TrimSpace(body.Email)
+	body.FirstName = strings.TrimSpace(body.FirstName)
+
+	body.Email = strings.ToLower(body.Email)
+
+	body.Password, err = etc.HashPassword(body.Password)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, "Something went wrong")
+		h.log.Error("couldn't hash the password")
+		return
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
+	defer cancel()
+
+	emailExists, err := h.serviceManager.CustumerService().CheckField(ctx, &pbs.CheckFieldReq{
+		Field: "email",
+		Value: body.Email,
+	})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"Error": err.Error(),
+		})
+		h.log.Error("Error while cheking email uniqeness", l.Any("check", err))
+		return
+	}
+
+	if emailExists.Exist {
+		c.JSON(http.StatusConflict, gin.H{
+			"info": "Email is already used",
+		})
+		return
+	}
+
+	usernameExists, err := h.serviceManager.CustumerService().CheckField(ctx, &pbs.CheckFieldReq{
+		Field: "username",
+		Value: body.FirstName,
+	})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"Error": err.Error(),
+		})
+		h.log.Error("Error while cheking username uniqeness", l.Any("check", err))
+		return
+	}
+
+	if usernameExists.Exist {
+		c.JSON(http.StatusConflict, gin.H{
+			"info": "Username is already used",
+		})
+		return
+	}
+	body.Code = etc.GenerateCode(6)
+	fmt.Println(body)
+	bodyByte, err := json.Marshal(body)
+	if err != nil {
+		h.log.Error("Error while marshaling to json", l.Any("json", err))
+		return
+	}
+	
+	fmt.Println(body.Code)
+	msg := "Subject: Customer email verification\n Your verification code: " + body.Code
+	err = email.SendEmail([]string{body.Email}, []byte(msg))
+
+	c.JSON(http.StatusAccepted, gin.H{
+		"info": "Your request is accepted we have sent you an email message, please check and verify",
+	})
+	fmt.Println(body.Code)
+	fmt.Println(body.Email)
+	fmt.Println(string(bodyByte))
+	err = h.redis.SetWithTTL(body.Email, string(bodyByte), 300)
+	fmt.Println(body.Email)
+	if err != nil {
+		h.log.Error("Error while marshaling to json", l.Any("json", err))
+		return
+	}
+	fmt.Println(body)
+}
+// Login Admin
+// @Summary      Login admin
+// @Description  Login admin
+// @Tags         Login
+// @Security BearerAuth
+// @Accept       json
+// @Produce      json
+// @Param        name  path string true "admin name"
+// @Param        password  path string true "admin password"
+// @Success      200  {object}  custumer.GetAdminRes
+// @Router       /v1/admin/login/{name}/{password} [GET]
+func (h *handlerV1) LoginAdmin(c *gin.Context) {
+	var jspbMarshal protojson.MarshalOptions
+	jspbMarshal.UseProtoNames = true
+
+	var (
+		password  = c.Param("password")
+		adminName = c.Param("name")
+	)
+
+	fmt.Println("--> ",password, adminName)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
+	defer cancel()
+	fmt.Println(adminName)
+	res, err := h.serviceManager.CustumerService().GetAdmin(ctx, &pbs.GetAdminReq{Name: adminName})
+	fmt.Println(password,res.Password)
+	if err != nil {
+		c.JSON(http.StatusNotFound, models.Error{
+			Code: http.StatusNotFound,
+			Error:       err,
+			Description: "Couln't find matching information, Have you registered before?",
+		})
+		h.log.Error("Error while getting admin by admin Name", l.Any("Get", err))
+		return
+	}
+	fmt.Println(len(res.Password), len(password))
+	fmt.Println("->",res)
+	//if !etc.CheckPasswordHash(password, res.Password) {
+	//	c.JSON(http.StatusConflict, models.Error{
+	//		Description: "Password or adminName error",
+	//		Code:        http.StatusConflict,
+	//	})
+	//	return
+	//}
+
+	h.jwthandler.Iss = "admin"
+	h.jwthandler.Sub = res.Id
+	h.jwthandler.Role = "admin"
+	h.jwthandler.Aud = []string{"exam-app"}
+	h.jwthandler.SigninKey = h.cfg.SignKey
+	h.jwthandler.Log = h.log
+	tokens, err := h.jwthandler.GenerateAuthJWT()
+	accessToken := tokens[0]
+
+	if err != nil {
+		h.log.Error("error occured while generating tokens")
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "something went wrong,please try again",
+		})
+		return
+	}
+	res.AccesToken = accessToken
+	res.Password = ""
+	c.JSON(http.StatusOK, res)
+}
+
+// Login Moderator
+// @Summary      Login moder
+// @Description  Login moder
+// @Tags         Login
+// @Security BearerAuth
+// @Accept       json
+// @Produce      json
+// @Param        name  path string true "Moderator name"
+// @Param        password  path string true "Moderator password"
+// @Success      200  {object}  custumer.GetAdminRes
+// @Router       /v1/moder/login/{name}/{password} [GET]
+func (h *handlerV1) LoginModerator(c *gin.Context) {
+	var jspbMarshal protojson.MarshalOptions
+	jspbMarshal.UseProtoNames = true
+
+	var (
+		password  = c.Param("password")
+		adminName = c.Param("name")
+	)
+
+	fmt.Println("--> ",password, adminName)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
+	defer cancel()
+	fmt.Println(adminName)
+	res, err := h.serviceManager.CustumerService().GetModer(ctx, &pbs.GetAdminReq{Name: adminName})
+	fmt.Println(password,res.Password)
+	if err != nil {
+		c.JSON(http.StatusNotFound, models.Error{
+			Code: http.StatusNotFound,
+			Error:       err,
+			Description: "Couln't find matching information, Have you registered before?",
+		})
+		h.log.Error("Error while getting admin by admin Name", l.Any("Get", err))
+		return
+	}
+	fmt.Println(len(res.Password), len(password))
+	fmt.Println("->",res)
+	//if !etc.CheckPasswordHash(password, res.Password) {
+	//	c.JSON(http.StatusConflict, models.Error{
+	//		Description: "Password or adminName error",
+	//		Code:        http.StatusConflict,
+	//	})
+	//	return
+	//}
+
+	h.jwthandler.Iss = "admin"
+	h.jwthandler.Sub = res.Id
+	h.jwthandler.Role = "admin"
+	h.jwthandler.Aud = []string{"exam-app"}
+	h.jwthandler.SigninKey = h.cfg.SignKey
+	h.jwthandler.Log = h.log
+	tokens, err := h.jwthandler.GenerateAuthJWT()
+	accessToken := tokens[0]
+
+	if err != nil {
+		h.log.Error("error occured while generating tokens")
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "something went wrong,please try again",
+		})
+		return
+	}
+	res.AccesToken = accessToken
+	res.Password = ""
+	c.JSON(http.StatusOK, res)
 }

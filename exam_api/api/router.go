@@ -5,6 +5,10 @@ import (
 	"examLast/exam_api/config"
 	"examLast/exam_api/pkg/logger"
 	"examLast/exam_api/services"
+	jwthandler "examLast/exam_api/api/tokens"
+	middleware "examLast/exam_api/api/middleware"
+	"examLast/exam_api/storage/repo"
+	"github.com/casbin/casbin/v2"
 
 	_ "examLast/exam_api/api/docs" //swag
 
@@ -18,20 +22,40 @@ type Option struct {
 	Conf           config.Config
 	Logger         logger.Logger
 	ServiceManager services.IServiceManager
+	Redis     repo.InMemoryStorageI
+	CasbinEnforcer  *casbin.Enforcer
 }
 
 // New ...
+// @Description ishlaaaaaaaaaaaaaaaaaaaaaaaaaaa
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+
 func New(option Option) *gin.Engine {
 	router := gin.New()
+
+
 
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 
+	jwt := jwthandler.JWTHandler{
+		SigninKey: option.Conf.SignKey,
+		Log:       option.Logger,
+	}
+
+	
 	handlerV1 := v1.New(&v1.HandlerV1Config{
 		Logger:         option.Logger,
 		ServiceManager: option.ServiceManager,
 		Cfg:            option.Conf,
+		Redis:          option.Redis,
+		JWTHandler:      jwt,
 	})
+
+	router.Use(middleware.NewAuth(option.CasbinEnforcer, jwt, config.Load()))
+
 
 	api := router.Group("/v1")
 	api.POST("/custumer/create", handlerV1.CreateCustumer)
@@ -50,6 +74,10 @@ func New(option Option) *gin.Engine {
 	api.GET("/custumer/getList",handlerV1.GetListCustumers)
 	api.GET("/post/get/:id",handlerV1.GetPost)
 	api.GET("/post/get/reatings/avarage/:id",handlerV1.GetPostReatingNew)
+	api.POST("/register",handlerV1.RegisterUser)
+	api.PATCH("/verify/:email/:code",handlerV1.Verify)
+	api.GET("/token", handlerV1.GetAccesToken)
+	api.GET("/admin/login/:name/:password", handlerV1.LoginAdmin)
 	url := ginSwagger.URL("swagger/doc.json")
 	api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFile.Handler, url))
 	return router

@@ -12,4 +12,6 @@ run_script:
 swag:
 	swag init -g ./api/router.go -o api/docs
 
-	
+proto-gen:
+	bash ${CURRENT_DIR}/scripts/gen-proto.sh
+	ls genproto/*.pb.go | xargs -n1 -IX bash -c "sed -e '/bool/ s/,omitempty//' X > X.tmp && mv X{.tmp,}"	
