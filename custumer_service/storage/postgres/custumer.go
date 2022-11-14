@@ -1,7 +1,7 @@
 package postgres
 
 import (
-	pb "examLast/custumer_service/genproto/custum"
+	pb "examLast/custumer_service/genproto/custumer_proto"
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
@@ -118,6 +118,9 @@ func (r *custumRepo) ListAllCustum(req *pb.Empty) (*pb.CustumerAll, error) {
 	result12.AllCustum = resul
 	return &result12, nil
 }
+
+
+
 func (r *custumRepo) GetByCustumId(req *pb.GetId) (*pb.CustumerInfo, error) {
 	result := pb.CustumerInfo{}
 	fmt.Println(req)
@@ -176,13 +179,17 @@ func (r *custumRepo) Create(req *pb.CustumerForCreate) (*pb.CustumerInfo, error)
 		first_name,
 		last_name,
 		email,
-		phonenumber
-		) values ($1, $2, $3, $4) returning id, first_name, last_name, email, phonenumber`,
+		password,
+		phonenumber,
+		refresh_token
+		) values ($1, $2, $3, $4, $5, $6) returning id, first_name, last_name, email, phonenumber, refresh_token`,
 		req.FirstName,
 		req.LastName,
 		req.Email,
-		req.PhoneNumber).Scan(
-		&custumResp.Id, &custumResp.FirstName, &custumResp.LastName, &custumResp.Email, &custumResp.PhoneNumber)
+		req.Password,
+		req.PhoneNumber,
+		req.RefreshToken).Scan(
+		&custumResp.Id, &custumResp.FirstName, &custumResp.LastName, &custumResp.Email, &custumResp.PhoneNumber, &custumResp.RefreshToken)
 	if err != nil {
 		return &pb.CustumerInfo{}, err
 	}
@@ -213,4 +220,79 @@ func (r *custumRepo) Create(req *pb.CustumerForCreate) (*pb.CustumerInfo, error)
 	fmt.Println(addresses)
 	custumResp.Addresses = addresses
 	return &custumResp, nil
+}
+
+func (r *custumRepo) CheckField(req *pb.CheckFieldReq) (*pb.CheckFieldRes, error) {
+	query := fmt.Sprintf("SELECT 1 FROM users WHERE %s=$1", req.Field)
+	res := &pb.CheckFieldRes{}
+	temp := -1
+	fmt.Println(query, req.Value)
+	err := r.db.QueryRow(query, req.Value).Scan(&temp)
+	if err != nil {
+		fmt.Println("\n Error>>> ", err, "\n")
+		fmt.Println(temp)
+		res.Exist = false
+		fmt.Println(res)
+		return res, nil
+	}
+	if temp == 0 {
+		fmt.Println(temp, res, err)
+		res.Exist = true
+	} else {
+		res.Exist = false
+	}
+	fmt.Println(res)
+	return res, nil
+}
+
+func (r *custumRepo) GetAdmin(req *pb.GetAdminReq) (*pb.GetAdminRes, error) {
+	res := &pb.GetAdminRes{}
+	fmt.Println("{")
+	fmt.Println(req)
+	fmt.Println("}")
+	err := r.db.QueryRow(`SELECT 
+		id,
+		admin_name, 
+		created_at,
+		updated_at,
+		admin_password
+		from admins where admin_name=$1 and deleted_at is null
+		`, req.Name).Scan(
+		&res.Id,
+		&res.Name,
+		&res.CreatedAt,
+		&res.UpdatedAt,
+		&res.Password,
+	)
+
+	if err != nil {
+		return &pb.GetAdminRes{}, err
+	}
+	return res, nil
+}
+
+func (r *custumRepo) GetModer(req *pb.GetAdminReq) (*pb.GetAdminRes, error) {
+	res := &pb.GetAdminRes{}
+	fmt.Println("{")
+	fmt.Println(req)
+	fmt.Println("}")
+	err := r.db.QueryRow(`SELECT 
+		id,
+		moder_name, 
+		created_at,
+		updated_at,
+		admin_password
+		from moders where moder_name=$1 and deleted_at is null
+		`, req.Name).Scan(
+		&res.Id,
+		&res.Name,
+		&res.CreatedAt,
+		&res.UpdatedAt,
+		&res.Password,
+	)
+
+	if err != nil {
+		return &pb.GetAdminRes{}, err
+	}
+	return res, nil
 }

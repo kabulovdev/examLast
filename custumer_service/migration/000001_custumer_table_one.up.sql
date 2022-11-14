@@ -3,7 +3,9 @@ CREATE table custumer_base (
     first_name text,
     last_name text,
     email text,
+    password text,
     phonenumber text,
+    refresh_token text NOT NULL,
     created_at TIMESTAMP(0) WITH TIME zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP(0) WITH TIME zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     deleted_at TIMESTAMP(0) WITH TIME zone NULL
@@ -19,4 +21,14 @@ create table custumer_address (
     custumer_id int references custumer_base (id),
     street text,
     home_address text
+);
+
+create table admins (
+        id serial primary key,
+		admin_name text, 
+		admin_password text,
+        created_at TIMESTAMP(0) WITH TIME zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        updated_at TIMESTAMP(0) WITH TIME zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        deleted_at TIMESTAMP(0) WITH TIME zone NULL
+
 );

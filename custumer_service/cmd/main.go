@@ -4,7 +4,7 @@ import (
 	"net"
 
 	"examLast/custumer_service/config"
-	pb "examLast/custumer_service/genproto/custum"
+	pb "examLast/custumer_service/genproto/custumer_proto"
 	"examLast/custumer_service/pkg/db"
 	"examLast/custumer_service/pkg/logger"
 	"examLast/custumer_service/service"

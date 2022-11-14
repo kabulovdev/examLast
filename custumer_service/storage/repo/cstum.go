@@ -1,7 +1,7 @@
 package repo
 
 import (
-	pb "examLast/custumer_service/genproto/custum"
+	pb "examLast/custumer_service/genproto/custumer_proto"
 )
 
 type CustumerInfoI interface {
@@ -10,4 +10,7 @@ type CustumerInfoI interface {
 	Update(*pb.CustumerInfo) (*pb.CustumerInfo, error)
 	DeletCustum(*pb.GetId) (*pb.Empty, error)
 	ListAllCustum(*pb.Empty) (*pb.CustumerAll, error)
+	CheckField(*pb.CheckFieldReq) (*pb.CheckFieldRes, error)
+	GetAdmin(*pb.GetAdminReq) (*pb.GetAdminRes, error)
+	GetModer(*pb.GetAdminReq) (*pb.GetAdminRes, error)
 }

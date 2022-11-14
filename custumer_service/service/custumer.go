@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	pb "examLast/custumer_service/genproto/custum"
+	pb "examLast/custumer_service/genproto/custumer_proto"
 	l "examLast/custumer_service/pkg/logger"
 	//grpcclient "custumer/service/grpc_client"
 	"examLast/custumer_service/storage"
@@ -73,4 +73,34 @@ func (s *CustumerService) Create(ctx context.Context, req *pb.CustumerForCreate)
 		return &pb.CustumerInfo{}, status.Error(codes.Internal, "something went wrong")
 	}
 	return store, nil
+}
+
+func (s *CustumerService) CheckField(ctx context.Context, req *pb.CheckFieldReq) (*pb.CheckFieldRes, error){
+	fmt.Println(req)
+	check, err :=s.storage.Custum().CheckField(req)
+	if err != nil {
+		s.logger.Error("err while check user", l.Any("err check user", err))
+		return &pb.CheckFieldRes{}, err
+	}
+	return check, nil
+}
+
+func (s *CustumerService) GetAdmin(ctx context.Context, req *pb.GetAdminReq) (*pb.GetAdminRes, error){
+	fmt.Println(req)
+	admin, err :=s.storage.Custum().GetAdmin(req)
+	if err != nil {
+		s.logger.Error("err while get admin", l.Any("err get adim", err))
+		return &pb.GetAdminRes{}, err
+	}
+	return admin, nil
+}
+
+func (s *CustumerService) GetModer(ctx context.Context, req *pb.GetAdminReq) (*pb.GetAdminRes, error){
+	fmt.Println(req)
+	admin, err :=s.storage.Custum().GetModer(req)
+	if err != nil {
+		s.logger.Error("err while get admin", l.Any("err get adim", err))
+		return &pb.GetAdminRes{}, err
+	}
+	return admin, nil
 }
