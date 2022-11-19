@@ -28,18 +28,18 @@ func Load() Config {
 	c.Environment = cast.ToString(getOrReturnDefault("ENVIRONMENT", "develop"))
 	c.PostgresHost = cast.ToString(getOrReturnDefault("POSTGRES_HOST", "localhost"))
 	c.PostgresPort = cast.ToInt(getOrReturnDefault("POSTGRES_PORT", 5432))
-	c.PostgresDatabase = cast.ToString(getOrReturnDefault("POSTGRES_DATABASE", "custumerdb"))
+	c.PostgresDatabase = cast.ToString(getOrReturnDefault("POSTGRES_DATABASE", "custumer_db"))
 	c.PostgresUser = cast.ToString(getOrReturnDefault("POSTGRES_USER", "postgres"))
 	c.PostgresPassword = cast.ToString(getOrReturnDefault("POSTGRES_PASSWORD", "sdy12197"))
 
-	c.ReatingServiceHost = cast.ToString(getOrReturnDefault("REATING_HOST", "localhost"))
+	c.ReatingServiceHost = cast.ToString(getOrReturnDefault("REATING_HOST", "reating_service"))
 	c.ReatingServicePort = cast.ToInt(getOrReturnDefault("REATING_PORT", 9084))
 
-	c.PostServiceHost = cast.ToString(getOrReturnDefault("POST_HOST", "localhost"))
+	c.PostServiceHost = cast.ToString(getOrReturnDefault("POST_HOST", "post_service"))
 	c.PostServicePort = cast.ToInt(getOrReturnDefault("POST_PORT", 9083))
 	c.LogLevel = cast.ToString(getOrReturnDefault("LOG_LEVEL", "debug"))
 
-	c.RPCPort = cast.ToString(getOrReturnDefault("RPC_PORT", ":9082"))
+	c.RPCPort = cast.ToString(getOrReturnDefault("RPC_PORT", ":9088"))
 	return c
 }
 

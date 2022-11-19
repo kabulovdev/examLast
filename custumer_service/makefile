@@ -16,10 +16,10 @@ server:
 	go run cmd/main.go
 
 migrate_up:
-	migrate -path migrations/ -database postgres://postgres:sdy12197@localhost:5432/custumerdb up
+	migrate -path migration/ -database postgres://abduazim:1234@database-1.c9lxq3r1itbt.us-east-1.rds.amazonaws.com/custumer_db up
 
 migrate_down:
-	migrate -path migrations/ -database postgres://postgres:sdy12197@localhost:5432/custumerdb down
+	migrate -path migration/ -database postgres://abduazim:1234@database-1.c9lxq3r1itbt.us-east-1.rds.amazonaws.com/custumerdb down
 
 migrate_force:
-	migrate -path migrations/ -database postgres://postgres:sdy12197@localhost:5432/custumerdb force 2
+	migrate -path migration/ -database postgres://abduazim:1234@database-1.c9lxq3r1itbt.us-east-1.rds.amazonaws.com/custumerdb force 2
