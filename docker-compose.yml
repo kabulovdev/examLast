@@ -1,0 +1,86 @@
+version: "3.8"
+
+services:  
+  custumer_service:
+    container_name: custumer_service
+    build: ./custumer_service
+    environment:
+      - ENVIRONMENT=develop
+      - POSTGRES_HOST=database-1.c9lxq3r1itbt.us-east-1.rds.amazonaws.com
+      - POSTGRES_PORT=5432
+      - POSTGRES_DATABASE=custumer_db
+      - POSTGRES_USER=abduazim
+      - POSTGRES_PASSWORD=1234
+      - POST_HOST=post_service
+      - POST_PORT=9083
+      - REATING_HOST=reating_service
+      - REATING_PORT=9084
+    depends_on:
+      - "post_service"
+      - "reating_service"
+    ports:
+      - "9088:9088"
+    links:
+      - "post_service"
+      - "reating_service"  
+
+  post_service:
+    container_name: post_service
+    build: ./post_service
+    environment:
+      - ENVIRONMENT=develop
+      - POSTGRES_HOST=database-1.c9lxq3r1itbt.us-east-1.rds.amazonaws.com
+      - POSTGRES_PORT=5432
+      - POSTGRES_DATABASE=post_db
+      - POSTGRES_USER=abduazim
+      - POSTGRES_PASSWORD=1234
+    ports:
+      - "9093:9093" 
+
+  reating_service:
+    container_name: reating_service
+    build: ./reating_service
+    environment:
+      - ENVIRONMENT=develop
+      - POSTGRES_HOST=database-1.c9lxq3r1itbt.us-east-1.rds.amazonaws.com
+      - POSTGRES_PORT=5432
+      - POSTGRES_DATABASE=review_db
+      - POSTGRES_USER=abduazim
+      - POSTGRES_PASSWORD=1234
+    ports:
+      - "9084:9084"
+
+  exam_api:
+    container_name: exam_api
+    build: ./exam_api
+    environment:
+      - ENVIRONMENT=develop
+      - POSTGRES_HOST=database-1.c9lxq3r1itbt.us-east-1.rds.amazonaws.com
+      - POSTGRES_PORT=5432
+      - POSTGRES_DATABASE=rolesdb
+      - POSTGRES_USER=abduazim
+      - POSTGRES_PASSWORD=1234
+      - CUSTUMER_SERVICE_HOST=custumer_service
+      - CUSTUMER_SERVICE_PORT=9088
+      - POST_SERVICE_HOST=post_service
+      - POST_SERVICE_PORT=9093
+      - REATING_SERVICE_HOST=reating_service
+      - REATING_SERVICE_PORT=9084
+    depends_on:
+      - "post_service"
+      - "reating_service"
+      - "custumer_service"
+    ports:
+      - "9079:9079"
+    links:
+      - "post_service"
+      - "reating_service"
+      - "custumer_service"      
+  
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - "6378:6379"
+volumes:
+  dbdata: # create the volume for persisting data.
