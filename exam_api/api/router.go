@@ -5,6 +5,7 @@ import (
 	"examLast/exam_api/config"
 	"examLast/exam_api/pkg/logger"
 	"examLast/exam_api/services"
+	"github.com/gin-contrib/cors"
 	jwthandler "examLast/exam_api/api/tokens"
 	middleware "examLast/exam_api/api/middleware"
 	"examLast/exam_api/storage/repo"
@@ -34,7 +35,13 @@ type Option struct {
 
 func New(option Option) *gin.Engine {
 	router := gin.New()
-
+	router.Use(cors.New(cors.Config{
+		AllowAllOrigins:  true,
+		AllowHeaders:     []string{"*"},
+		AllowMethods:     []string{"*"},
+		AllowCredentials: true,
+		AllowOrigins:     []string{},
+	}))
 
 
 	router.Use(gin.Logger())
