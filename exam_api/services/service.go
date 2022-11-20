@@ -7,10 +7,10 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/resolver"
 
-	"examLast/exam_api/config"
-	pbs "examLast/exam_api/genproto/custumer_proto"
-	pb "examLast/exam_api/genproto/post_proto"
-	pr "examLast/exam_api/genproto/reating_proto"
+	"swagger/examLast/exam_api/config"
+	pbs "swagger/examLast/exam_api/genproto/custumer_proto"
+	pb "swagger/examLast/exam_api/genproto/post_proto"
+	pr "swagger/examLast/exam_api/genproto/reating_proto"
 )
 
 type IServiceManager interface {

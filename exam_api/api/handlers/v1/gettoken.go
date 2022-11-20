@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	models "examLast/exam_api/api/models"
-	pbs "examLast/exam_api/genproto/custumer_proto"
-	"examLast/exam_api/pkg/logger"
+	models "swagger/examLast/exam_api/api/models"
+	pbs "swagger/examLast/exam_api/genproto/custumer_proto"
+	"swagger/examLast/exam_api/pkg/logger"
 
 	"github.com/gin-gonic/gin"
 	"google.golang.org/protobuf/encoding/protojson"

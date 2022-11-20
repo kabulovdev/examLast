@@ -1,11 +1,11 @@
 package main
 
 import (
-	"examLast/exam_api/api"
-	"examLast/exam_api/config"
-	"examLast/exam_api/pkg/logger"
-	"examLast/exam_api/services"
-	r "examLast/exam_api/storage/redis"
+	"swagger/examLast/exam_api/api"
+	"swagger/examLast/exam_api/config"
+	"swagger/examLast/exam_api/pkg/logger"
+	"swagger/examLast/exam_api/services"
+	r "swagger/examLast/exam_api/storage/redis"
 	"github.com/casbin/casbin/v2/util"
 	"fmt"
 	defaultrolemanager "github.com/casbin/casbin/v2/rbac/default-role-manager"

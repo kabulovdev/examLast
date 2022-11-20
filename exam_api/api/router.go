@@ -1,17 +1,17 @@
 package api
 
 import (
-	v1 "examLast/exam_api/api/handlers/v1"
-	"examLast/exam_api/config"
-	"examLast/exam_api/pkg/logger"
-	"examLast/exam_api/services"
+	v1 "swagger/examLast/exam_api/api/handlers/v1"
+	"swagger/examLast/exam_api/config"
+	"swagger/examLast/exam_api/pkg/logger"
+	"swagger/examLast/exam_api/services"
 	"github.com/gin-contrib/cors"
-	jwthandler "examLast/exam_api/api/tokens"
-	middleware "examLast/exam_api/api/middleware"
-	"examLast/exam_api/storage/repo"
+	jwthandler "swagger/examLast/exam_api/api/tokens"
+	middleware "swagger/examLast/exam_api/api/middleware"
+	"swagger/examLast/exam_api/storage/repo"
 	"github.com/casbin/casbin/v2"
 
-	_ "examLast/exam_api/api/docs" //swag
+	_ "swagger/examLast/exam_api/api/docs" //swag
 
 	"github.com/gin-gonic/gin"
 	swaggerFile "github.com/swaggo/files"

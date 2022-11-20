@@ -2,25 +2,25 @@ package v1
 
 import (
 	"context"
-	"examLast/exam_api/api/handlers/models"
+	"swagger/examLast/exam_api/api/handlers/models"
 	"fmt"
 	"net/http"
 	"strings"
-	email "examLast/exam_api/email"
+	email "swagger/examLast/exam_api/email"
 	"encoding/json"
 	"strconv"
 	"github.com/spf13/cast"
 	"time"
- 	etc "examLast/exam_api/pkg/etc"
+ 	etc "swagger/examLast/exam_api/pkg/etc"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/protobuf/encoding/protojson"
 
-	pbs "examLast/exam_api/genproto/custumer_proto"
-	pb "examLast/exam_api/genproto/post_proto"
-	pr "examLast/exam_api/genproto/reating_proto"
+	pbs "swagger/examLast/exam_api/genproto/custumer_proto"
+	pb "swagger/examLast/exam_api/genproto/post_proto"
+	pr "swagger/examLast/exam_api/genproto/reating_proto"
 
 	//pr "exam_api/genproto/reating_proto"
-	l "examLast/exam_api/pkg/logger"
+	l "swagger/examLast/exam_api/pkg/logger"
 )
 
 type AllthingPost struct {

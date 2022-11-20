@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 	"github.com/dgrijalva/jwt-go"
-	"examLast/exam_api/pkg/logger"
+	"swagger/examLast/exam_api/pkg/logger"
 )
 // JWTHandler ...
 type JWTHandler struct {

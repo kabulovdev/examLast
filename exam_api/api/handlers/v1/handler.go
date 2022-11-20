@@ -1,13 +1,13 @@
 package v1
 
 import (
-	"examLast/exam_api/config"
+	"swagger/examLast/exam_api/config"
 	"fmt"
-	jwthandler "examLast/exam_api/api/tokens"
-	"examLast/exam_api/pkg/logger"
-	t "examLast/exam_api/api/tokens"
-	"examLast/exam_api/storage/repo"
-	"examLast/exam_api/services"
+	jwthandler "swagger/examLast/exam_api/api/tokens"
+	"swagger/examLast/exam_api/pkg/logger"
+	t "swagger/examLast/exam_api/api/tokens"
+	"swagger/examLast/exam_api/storage/repo"
+	"swagger/examLast/exam_api/services"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )

@@ -2,7 +2,7 @@ package redis
 
 import (
 	"github.com/gomodule/redigo/redis"
-	"examLast/exam_api/storage/repo"
+	"swagger/examLast/exam_api/storage/repo"
 )
 
 type RedisRepo struct {

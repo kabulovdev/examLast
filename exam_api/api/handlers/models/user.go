@@ -1,9 +1,9 @@
 package models
 
 import (
-	pc "examLast/exam_api/genproto/custumer_proto"
-	pp "examLast/exam_api/genproto/post_proto"
-	pr "examLast/exam_api/genproto/reating_proto"
+	pc "swagger/examLast/exam_api/genproto/custumer_proto"
+	pp "swagger/examLast/exam_api/genproto/post_proto"
+	pr "swagger/examLast/exam_api/genproto/reating_proto"
 )
 
 type UpdateAccessToken struct {

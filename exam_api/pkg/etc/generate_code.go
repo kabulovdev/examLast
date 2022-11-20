@@ -4,7 +4,7 @@ import (
 	"crypto/rand"
 	"io"
 
-	l "examLast/exam_api/pkg/logger"
+	l "swagger/examLast/exam_api/pkg/logger"
 )
 
 // Table for code generator

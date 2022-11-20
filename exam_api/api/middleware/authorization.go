@@ -8,9 +8,9 @@ import (
 	"github.com/casbin/casbin/v2"
 	jwtg "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"examLast/exam_api/api/models"
-	token "examLast/exam_api/api/tokens"
-	"examLast/exam_api/config"
+	"swagger/examLast/exam_api/api/models"
+	token "swagger/examLast/exam_api/api/tokens"
+	"swagger/examLast/exam_api/config"
 )
 
 type JwtRoleAuth struct {
