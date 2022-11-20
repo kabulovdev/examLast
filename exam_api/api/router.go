@@ -32,6 +32,8 @@ type Option struct {
 // @securityDefinitions.apikey BearerAuth
 // @in header
 // @name Authorization
+// @host      54.238.26.123:9079
+// @BasePath  /v1
 
 func New(option Option) *gin.Engine {
 	router := gin.New()
