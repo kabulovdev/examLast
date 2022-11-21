@@ -41,6 +41,7 @@ func (h *handlerV1) GetPostReatingNew(c *gin.Context) {
 	var jspbMarshal protojson.MarshalOptions
 	jspbMarshal.UseProtoNames = true
 	guid := c.Param("id")
+	fmt.Println(guid)
 	id, err := strconv.ParseInt(guid, 10, 64)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
