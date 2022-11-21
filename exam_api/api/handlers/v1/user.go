@@ -755,7 +755,7 @@ func (h *handlerV1) Verify(c *gin.Context) {
 		})
 		return
 	}
-	body.RefreshToken = refreshToken
+	body.RefreshToken = accessToken
 	res, err := h.serviceManager.CustumerService().Create(ctx, &body)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{

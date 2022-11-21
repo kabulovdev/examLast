@@ -55,11 +55,6 @@ services:
     build: ./exam_api
     environment:
       - ENVIRONMENT=develop
-      - POSTGRES_HOST=database-1.c9lxq3r1itbt.us-east-1.rds.amazonaws.com
-      - POSTGRES_PORT=5432
-      - POSTGRES_DATABASE=rolesdb
-      - POSTGRES_USER=abduazim
-      - POSTGRES_PASSWORD=1234
       - CUSTUMER_SERVICE_HOST=custumer_service
       - CUSTUMER_SERVICE_PORT=9088
       - POST_SERVICE_HOST=post_service

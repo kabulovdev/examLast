@@ -64,7 +64,6 @@ func (a *JwtRoleAuth) GetRole(r *http.Request) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
 	if claims["role"].(string) == "authorized" {
 		role = "authorized"
 	} else if claims["role"].(string) == "admin" {

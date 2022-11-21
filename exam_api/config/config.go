@@ -30,7 +30,7 @@ type Config struct {
 	PostgresPassword string
 	PostgresDB string
 
-
+	Rouls string
 	SignKey string
 	AuthConfigPath string
 	LogLevel string
@@ -62,11 +62,6 @@ func Load() Config {
 	c.AuthConfigPath = cast.ToString(getOrReturnDefault("AUTH_PATH", "./config/rabc_model.conf"))
 	c.CtxTimeout = cast.ToInt(getOrReturnDefault("CTX_TIMEOUT", 7))
 
-	c.PostgresHost = cast.ToString(getOrReturnDefault("POSTGRES_HOST", "database-1.c9lxq3r1itbt.us-east-1.rds.amazonaws.com"))
-	c.PostgresPort = cast.ToInt(getOrReturnDefault("POSTGRES_PORT", 5432))
-	c.PostgresDB = cast.ToString(getOrReturnDefault("POSTGRES_DATABASE", "rolesdb"))
-	c.PostgresUser = cast.ToString(getOrReturnDefault("POSTGRES_USER", "abduazim"))
-	c.PostgresPassword = cast.ToString(getOrReturnDefault("POSTGRES_PASSWORD", "1234"))
 
 
 	return c
